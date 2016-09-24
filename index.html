@@ -3,11 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <title>Title of the document</title>
+    <link rel="stylesheet" href="https://yui-s.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="js/list.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div id="program">
+    <div id="program" class="content">
       <!--
       <input class="search" placeholder="Search" />
       <button class="sort" data-sort="navn">
@@ -17,13 +19,13 @@
 	Sort pulje
       </button>
       -->
-      <button class="filter-clear">
+      <button class="filter-clear pure-button">
 	Clear
       </button>
-      <button class="filter-kortspill">
+      <button class="filter-kortspill pure-button">
 	Kortspill
       </button>
-      <button class="filter-brettspill">
+      <button class="filter-brettspill pure-button">
 	Brettspill
       </button>
       <ul class="list"></ul>

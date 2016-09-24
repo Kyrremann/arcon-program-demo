@@ -66,7 +66,7 @@ var data = [
 
 var options = {
     valueNames: [ 'navn', 'pulje_start' ],
-    item: '<li><h3 class="navn"></h3><p class="pulje_start"></p></li>'
+    item: '<li class="pulje"><h3 class="navn"></h3><p class="pulje_start"></p></li>'
 };
 
 var programList = new List('program', options, data);
