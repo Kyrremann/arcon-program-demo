@@ -3,18 +3,29 @@
   <head>
     <meta charset="UTF-8">
     <title>Title of the document</title>
-    <script src="js/list.min.js"></script>
+    <script src="js/list.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
   </head>
   <body>
     <div id="program">
+      <!--
       <input class="search" placeholder="Search" />
       <button class="sort" data-sort="navn">
 	Sort name
       </button>
-      <button class="sort" data-sort="pulje">
+      <button class="sort" data-sort="pulje_start">
 	Sort pulje
       </button>
-
+      -->
+      <button class="filter-clear">
+	Clear
+      </button>
+      <button class="filter-kortspill">
+	Kortspill
+      </button>
+      <button class="filter-brettspill">
+	Brettspill
+      </button>
       <ul class="list"></ul>
 
     </div>
