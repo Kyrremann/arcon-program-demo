@@ -209,6 +209,62 @@ function sortMonday(av, bv, options) {
     return 0;
 }
 
+function sortCurrentDay() {
+    programList.sort('navn', { sortFunction: function(a, b, options) {
+	options.desc = false;
+	if (CURRENT_DAY === 'Friday') {
+	    return sortFriday(a.values(), b.values(), options);
+	} else if (CURRENT_DAY === 'Saturday') {
+	    return sortSaturday(a.values(), b.values(), options);
+	} else if (CURRENT_DAY === 'Sunday') {
+	    return sortSunday(a.values(), b.values(), options);
+	} else if (CURRENT_DAY === 'Monday') {
+	    return sortMonday(a.values(), b.values(), options);
+	} else {
+	    return sortByName(a.values(), b.values(), options);
+	}
+    }});
+}
+
+function filterCurrentType(current_type) {
+    programList.filter(function(item) {
+	var values = item.values();
+	var type = item.values().type;
+	return type === current_type && currentDay(values);
+    });
+}
+
+function filterCurrentDay(current_day) {
+    programList.filter(function(item) {
+	var values = item.values();
+	if (CURRENT_DAY === 'Friday') {
+	    return isFriday(values) && currentType(values);
+	} else if (CURRENT_DAY === 'Saturday') {
+	    return isSaturday(values) && currentType(values);
+	} else if (CURRENT_DAY === 'Sunday') {
+	    return isSunday(values) && currentType(values);
+	} else if (CURRENT_DAY === 'Monday') {
+	    return isMonday(values) && currentType(values);
+	} else {
+	    return true;
+	}
+    });
+}
+
+function defaultTypeFilterBehaviour(type) {
+    CURRENT_TYPE = type;
+    filterCurrentType(CURRENT_TYPE);
+    sortCurrentDay();
+    updateFilterText();
+}
+
+function defaultDayFilterBehaviour(day) {
+    CURRENT_DAY = day;
+    filterCurrentDay(CURRENT_DAY);
+    sortCurrentDay();
+    updateFilterText();
+}
+
 // List.js features
 var options = {
     valueNames: [ 'navn', 'regler', 'type', 'arrangor', 'deltagere', 'vinner', 'beskrivelse' ],
@@ -247,116 +303,46 @@ $(document).ready(function(e) {
 	$('#filter')[0].innerHTML = 'None';
     });
 
+    // Event type filters
     $('.filter-kortspill').on('click', function() {
-	CURRENT_TYPE = 'Kortspill';
-	programList.filter(function(item) {
-	    var values = item.values();
-	    var type = values.type;
-	    return type === "Kortspill" && currentDay(values);
-	});
-	updateFilterText();
+	defaultTypeFilterBehaviour('Kortspill');
     });
 
     $('.filter-brettspill').on('click', function() {
-	CURRENT_TYPE = 'Brettspill';
-	programList.filter(function(item) {
-	    var values = item.values();
-	    var type = item.values().type;
-	    return type === "Brettspill" && currentDay(values);
-	});
-	updateFilterText();
+	defaultTypeFilterBehaviour('Brettspill');
     });
 
     $('.filter-figurspill').on('click', function() {
-	CURRENT_TYPE = 'Figurspill';
-	programList.filter(function(item) {
-	    var values = item.values();
-	    var type = item.values().type;
-	    return type === "Figurspill" && currentDay(values);
-	});
-	updateFilterText();
+	defaultTypeFilterBehaviour('Figurspill');
     });
 
     $('.filter-annet').on('click', function() {
-	CURRENT_TYPE = 'Annet';
-	programList.filter(function(item) {
-	    var values = item.values();
-	    var type = item.values().type;
-	    return type === "Annet" && currentDay(values);
-	});
-	updateFilterText();
+	defaultTypeFilterBehaviour('Annet');
     });
 
     $('.filter-rollespill').on('click', function() {
-	CURRENT_TYPE = 'Rollespill';
-	programList.filter(function(item) {
-	    var values = item.values();
-	    var type = item.values().type;
-	    return type === "Rollespill" && currentDay(values);
-	});
-	updateFilterText();
+	defaultTypeFilterBehaviour('Rollespill');
     });
 
     $('.filter-turnering').on('click', function() {
-	CURRENT_TYPE = 'Turnering';
-	programList.filter(function(item) {
-	    var values = item.values();
-	    var type = item.values().type;
-	    return type === "Turnering" && currentDay(values);
-	});
-	updateFilterText();
+	defaultTypeFilterBehaviour('Turnering');
     });
 
+    // Day filters
     $('.filter-friday').on('click', function() {
-	CURRENT_DAY = 'Friday';
-	programList.filter(function(item) {
-	    var values = item.values();
-	    return isFriday(values) && currentType(values);
-	});
-	programList.sort('navn', { sortFunction: function(a, b, options) {
-	    options.desc = false;
-	    return sortFriday(a.values(), b.values(), options)
-	}});
-	updateFilterText();
+	defaultDayFilterBehaviour('Friday');
     });
 
     $('.filter-saturday').on('click', function() {
-	CURRENT_DAY = 'Saturday';
-	programList.filter(function(item) {
-	    var values = item.values();
-	    return isSaturday(values) && currentType(values);
-	});
-	programList.sort('navn', { sortFunction: function(a, b, options) {
-	    options.desc = false;
-	    return sortSaturday(a.values(), b.values(), options);
-	}});
-	updateFilterText();
+	defaultDayFilterBehaviour('Saturday');
     });
 
     $('.filter-sunday').on('click', function() {
-	CURRENT_DAY = 'Sunday';
-	programList.filter(function(item) {
-	    var values = item.values();
-	    return isSunday(values) && currentType(values);
-	});
-	programList.sort('navn', { sortFunction: function(a, b, options) {
-	    options.desc = false;
-	    return sortSunday(a.values(), b.values(), options);
-	}});
-	updateFilterText();
+	defaultDayFilterBehaviour('Sunday');
     });
 
     $('.filter-monday').on('click', function() {
-	CURRENT_DAY = 'Monday';
-	programList.filter(function(item) {
-	    var values = item.values();
-	    return isMonday(values) && currentType(values);
-	});
-	programList.sort('navn', { sortFunction: function(a, b, options) {
-	    options.desc = false;
-	    return sortMonday(a.values(), b.values(), options);
-	}});
-	updateFilterText();
+	defaultDayFilterBehaviour('Monday');
     });
 
     // JQuery features
