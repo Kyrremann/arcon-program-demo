@@ -3,6 +3,10 @@ CURRENT_DAY = null;
 CURRENT_TYPE = null;
 // Globals end
 
+function sortByName(a, b, options) {
+    return programList.utils.naturalSort(a.navn, b.navn, options);
+}
+
 function getTimeForPule(pulje) {
     return puljer[pulje.toString()];
 }
@@ -84,6 +88,125 @@ function updateFilterText() {
     } else {
 	element.innerHTML = 'None';
     }
+}
+
+function sortFriday(av, bv, options) {
+    if (isFriday(av) || isFriday(bv)) {
+	if (notNull(av.Pulje1) && notNull(bv.Pulje1)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje1)) {
+	    return -1;
+	} else if (notNull(bv.Pulje1)) {
+	    return 1;
+	} else if (notNull(av.Pulje2) && notNull(bv.Pulje2)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje2)) {
+	    return -1;
+	} else if (notNull(bv.Pulje2)) {
+	    return 1;
+	}
+	return sortByName(av, bv, options);
+    }
+}
+
+function sortSaturday(av, bv, options) {
+    if (isSaturday(av) || isSaturday(bv)) {
+	if (notNull(av.Pulje4) && notNull(bv.Pulje4)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje4)) {
+	    return -1;
+	} else if (notNull(bv.Pulje4)) {
+	    return 1;
+	} else if (notNull(av.Pulje5) && notNull(bv.Pulje5)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje5)) {
+	    return -1;
+	} else if (notNull(bv.Pulje5)) {
+	    return 1;
+	} else if (notNull(av.Pulje6) && notNull(bv.Pulje6)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje6)) {
+	    return -1;
+	} else if (notNull(bv.Pulje6)) {
+	    return 1;
+	} else if (notNull(av.Pulje7) && notNull(bv.Pulje7)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje7)) {
+	    return -1;
+	} else if (notNull(bv.Pulje7)) {
+	    return 1;
+	} else if (notNull(av.Pulje8) && notNull(bv.Pulje8)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje8)) {
+	    return -1;
+	} else if (notNull(bv.Pulje8)) {
+	    return 1;
+	} else if (notNull(av.Pulje9) && notNull(bv.Pulje9)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje9)) {
+	    return -1;
+	} else if (notNull(bv.Pulje9)) {
+	    return 1;
+	}
+	return sortByName(av, bv, options);
+    }
+}
+
+function sortSunday(av, bv, options) {
+    if (isSunday(av) || isSunday(bv)) {
+	if (notNull(av.Pulje10) && notNull(bv.Pulje10)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje10)) {
+	    return -1;
+	} else if (notNull(bv.Pulje10)) {
+	    return 1;
+	} else if (notNull(av.Pulje11) && notNull(bv.Pulje11)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje11)) {
+	    return -1;
+	} else if (notNull(bv.Pulje11)) {
+	    return 1;
+	} else if (notNull(av.Pulje12) && notNull(bv.Pulje12)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje12)) {
+	    return -1;
+	} else if (notNull(bv.Pulje12)) {
+	    return 1;
+	} else if (notNull(av.Pulje13) && notNull(bv.Pulje13)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje13)) {
+	    return -1;
+	} else if (notNull(bv.Pulje13)) {
+	    return 1;
+	} else if (notNull(av.Pulje14) && notNull(bv.Pulje14)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje14)) {
+	    return -1;
+	} else if (notNull(bv.Pulje14)) {
+	    return 1;
+	} else if (notNull(av.Pulje15) && notNull(bv.Pulje15)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje15)) {
+	    return -1;
+	} else if (notNull(bv.Pulje15)) {
+	    return 1;
+	}
+	return sortByName(av, bv, options);
+    }
+}
+
+function sortMonday(av, bv, options) {
+    if (isMonday(av) || isMonday(bv)) {
+	if (notNull(av.Pulje16) && notNull(bv.Pulje16)) {
+	    return sortByName(av, bv, options);
+	} else if (notNull(av.Pulje16)) {
+	    return -1;
+	} else if (notNull(bv.Pulje16)) {
+	    return 1;
+	}
+	return sortByName(av, bv, options);
+    }
+    return 0;
 }
 
 // List.js features
@@ -190,6 +313,10 @@ $(document).ready(function(e) {
 	    var values = item.values();
 	    return isFriday(values) && currentType(values);
 	});
+	programList.sort('navn', { sortFunction: function(a, b, options) {
+	    options.desc = false;
+	    return sortFriday(a.values(), b.values(), options)
+	}});
 	updateFilterText();
     });
 
@@ -199,6 +326,10 @@ $(document).ready(function(e) {
 	    var values = item.values();
 	    return isSaturday(values) && currentType(values);
 	});
+	programList.sort('navn', { sortFunction: function(a, b, options) {
+	    options.desc = false;
+	    return sortSaturday(a.values(), b.values(), options);
+	}});
 	updateFilterText();
     });
 
@@ -208,6 +339,10 @@ $(document).ready(function(e) {
 	    var values = item.values();
 	    return isSunday(values) && currentType(values);
 	});
+	programList.sort('navn', { sortFunction: function(a, b, options) {
+	    options.desc = false;
+	    return sortSunday(a.values(), b.values(), options);
+	}});
 	updateFilterText();
     });
 
@@ -217,6 +352,10 @@ $(document).ready(function(e) {
 	    var values = item.values();
 	    return isMonday(values) && currentType(values);
 	});
+	programList.sort('navn', { sortFunction: function(a, b, options) {
+	    options.desc = false;
+	    return sortMonday(a.values(), b.values(), options);
+	}});
 	updateFilterText();
     });
 
