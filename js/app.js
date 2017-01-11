@@ -348,5 +348,10 @@ $(document).ready(function(e) {
     // JQuery features
     $(".toggleDescription").click(function() {
 	$(this).next().first().slideToggle();
+	if (this.innerHTML == 'Kollaps') {
+	    this.innerHTML = 'Mer info';
+	} else {
+	    this.innerHTML = 'Kollaps';
+	}
     });
 });
