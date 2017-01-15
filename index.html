@@ -10,56 +10,66 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div id="program" class="content">
-      <!--
-      <input class="search" placeholder="Search" />
-      <button class="sort" data-sort="navn">
-	Sort name
-      </button>
-      <button class="sort" data-sort="pulje_start">
-	Sort pulje
-      </button>
-      -->
-      <button class="filter-clear pure-button">
-	Clear
-      </button>
-      <button class="filter-kortspill pure-button">
-	Kortspill
-      </button>
-      <button class="filter-brettspill pure-button">
-	Brettspill
-      </button>
-      <button class="filter-figurspill pure-button">
-	Figurspill
-      </button>
-      <button class="filter-rollespill pure-button">
-	Rollespill
-      </button>
-      <button class="filter-turnering pure-button">
-	Turnering
-      </button>
-      <button class="filter-annet pure-button">
-	Annet
-      </button>
-      <br />
-      <br />
-      <button class="filter-friday pure-button">
-	Friday
-      </button>
-      <button class="filter-saturday pure-button">
-	Saturday
-      </button>
-      <button class="filter-sunday pure-button">
-	Sunday
-      </button>
-      <button class="filter-monday pure-button">
-	Monday
-      </button>
-      <br />
-      <br />
-      <strong>Filters:</strong> <span id="filter">None</span>
-      <ul class="list"></ul>
+    <div id="layout">
+      <div id="main">
+	<div id="program" class="content">
+	  <!--
+	  <input class="search" placeholder="Search" />
+	  <button class="sort" data-sort="navn">
+	  Sort name
+	  </button>
+	  <button class="sort" data-sort="pulje_start">
+	  Sort pulje
+	  </button>
+	  -->
+	  <button class="filter-clear pure-button">
+	    Clear
+	  </button>
+	  <button class="filter-kortspill pure-button">
+	    Kortspill
+	  </button>
+	  <button class="filter-brettspill pure-button">
+	    Brettspill
+	  </button>
+	  <button class="filter-figurspill pure-button">
+	    Figurspill
+	  </button>
+	  <button class="filter-rollespill pure-button">
+	    Rollespill
+	  </button>
+	  <button class="filter-turnering pure-button">
+	    Turnering
+	  </button>
+	  <button class="filter-annet pure-button">
+	    Annet
+	  </button>
+	  <br />
+	  <br />
+	  <button class="filter-friday pure-button">
+	    Friday
+	  </button>
+	  <button class="filter-saturday pure-button">
+	    Saturday
+	  </button>
+	  <button class="filter-sunday pure-button">
+	    Sunday
+	  </button>
+	  <button class="filter-monday pure-button">
+	    Monday
+	  </button>
+	  <br />
+	  <br />
+	  <div>
+	    <strong style="font-size: 75%;">Filters:</strong>
+	    <span class="label label-info" id="filter_text_day">None</span>
+	    <span class="label label-info hidden" id="filter_text_type"></span>
+	    <span class="label label-info pull-right" id="filter_size" >0 / 0</span>
+	  </div>
+	  <ul class="list"></ul>
+	</div>
+      </div>
+      <script src="js/app.js"></script>
     </div>
-    <script src="js/app.js"></script>
+    </div>
   </body>
 </html>

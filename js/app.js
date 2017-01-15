@@ -78,16 +78,33 @@ function currentType(values) {
 }
 
 function updateFilterText() {
-    var element = $('#filter')[0];
-    if (CURRENT_DAY != null && CURRENT_TYPE != null) {
-	element.innerHTML = CURRENT_DAY + ' - ' + CURRENT_TYPE;
-    } else if (CURRENT_DAY != null) {
-	element.innerHTML = CURRENT_DAY;
-    } else if (CURRENT_TYPE != null) {
-	element.innerHTML = CURRENT_TYPE;
+    var day = $('#filter_text_day')[0];
+    var type = $('#filter_text_type')[0];
+
+    if (CURRENT_DAY != null) {
+	day.innerHTML = CURRENT_DAY;
+	day.classList.remove('hidden');
     } else {
-	element.innerHTML = 'None';
+	day.classList.add('hidden');
     }
+
+    if (CURRENT_TYPE != null) {
+	type.innerHTML = CURRENT_TYPE;
+	type.classList.remove('hidden');
+    } else {
+	type.classList.add('hidden');
+    }
+
+    if (CURRENT_DAY == null && CURRENT_TYPE == null) {
+	day.innerHTML = 'None';
+	day.classList.remove('hidden');
+	type.classList.add('hidden');
+    }
+}
+
+function updateFilterSize() {
+    var element = $('#filter_size')[0];
+    element.innerHTML = programList.matchingItems.length + '/' + programList.size();
 }
 
 function sortFriday(av, bv, options) {
@@ -256,6 +273,7 @@ function defaultTypeFilterBehaviour(type) {
     filterCurrentType(CURRENT_TYPE);
     sortCurrentDay();
     updateFilterText();
+    updateFilterSize();
 }
 
 function defaultDayFilterBehaviour(day) {
@@ -263,12 +281,19 @@ function defaultDayFilterBehaviour(day) {
     filterCurrentDay(CURRENT_DAY);
     sortCurrentDay();
     updateFilterText();
+    updateFilterSize();
 }
 
 // List.js features
 var options = {
-    valueNames: [ 'navn', 'regler', 'type', 'arrangor', 'deltagere', 'vinner', 'beskrivelse' ],
+    valueNames: [ 'id', 'navn', 'regler', 'type', 'arrangor', 'deltagere', 'vinner', 'beskrivelse' ],
     item: '<li class="pulje">\
+<span class="label label-info pull-right hidden">\
+  <span class="id"></span>\
+  <span class="time_start">hello</span>\
+  <span>></span>\
+  <span class="time_end">world</span>\
+</span>\
 <strong class="navn"></strong>\
 <br />\
 <strong>Regler:</strong> <span class="regler"></span>\
@@ -300,7 +325,8 @@ $(document).ready(function(e) {
 	CURRENT_TYPE = null;
 	programList.filter();
 	programList.sort('navn', { order: "asc" });
-	$('#filter')[0].innerHTML = 'None';
+	updateFilterText();
+	updateFilterSize();
     });
 
     // Event type filters
@@ -354,4 +380,8 @@ $(document).ready(function(e) {
 	    this.innerHTML = 'Kollaps';
 	}
     });
+
+    // Info about filters
+    updateFilterText();
+    updateFilterSize();
 });

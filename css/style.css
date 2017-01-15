@@ -47,3 +47,7 @@ ul {
 .button-xlarge {
   font-size: 125%;
 }
+
+.hidden {
+  display: none;
+}
