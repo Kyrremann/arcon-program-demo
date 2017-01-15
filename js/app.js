@@ -11,7 +11,7 @@ function getStartPuljeFor(id, index) {
     var event = programList.get('id', id)[0].values();
     for (var i = 0; i < 18; i++) {
 	if (notNull(event['Pulje' + i])) {
-	    return i + ' (' + data["puljer"][i] + ')');
+	    return i + ' (' + data["puljer"][i] + ')';
 	}
     }
 
