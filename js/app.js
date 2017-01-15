@@ -7,10 +7,6 @@ function sortByName(a, b, options) {
     return programList.utils.naturalSort(a.navn, b.navn, options);
 }
 
-function getTimeForPule(pulje) {
-    return puljer[pulje.toString()];
-}
-
 function getStartPuljeFor(id, index) {
     var event = programList.get('id', id)[0].values();
     for (var i = 0; i < 18; i++) {
