@@ -11,6 +11,17 @@ function getTimeForPule(pulje) {
     return puljer[pulje.toString()];
 }
 
+function getStartPuljeFor(id, index) {
+    var event = programList.get('id', id)[0].values();
+    for (var i = 0; i < 18; i++) {
+	if (notNull(event['Pulje' + i])) {
+	    return i + ' (' + data["puljer"][i] + ')');
+	}
+    }
+
+    return 'Unknown';
+}
+
 function notNull(value) {
     return value != null;
 }
@@ -288,11 +299,9 @@ function defaultDayFilterBehaviour(day) {
 var options = {
     valueNames: [ 'id', 'navn', 'regler', 'type', 'arrangor', 'deltagere', 'vinner', 'beskrivelse' ],
     item: '<li class="pulje">\
-<span class="label label-info pull-right hidden">\
-  <span class="id"></span>\
-  <span class="time_start">hello</span>\
-  <span>></span>\
-  <span class="time_end">world</span>\
+<span class="label label-info pull-right">\
+  <span class="id hidden"></span>\
+<span class="start_pulje"></span>\
 </span>\
 <strong class="navn"></strong>\
 <br />\
@@ -379,6 +388,11 @@ $(document).ready(function(e) {
 	} else {
 	    this.innerHTML = 'Kollaps';
 	}
+    });
+
+    // Insert start and stop time
+    $('.id').each(function( index ) {
+	$(this).nextAll(".start_pulje").text("Pulje " + getStartPuljeFor($(this).text(), index));
     });
 
     // Info about filters
