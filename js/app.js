@@ -18,6 +18,49 @@ function getStartPuljeFor(id, index) {
     return 'Unknown';
 }
 
+function theWholeFestival(event) {
+    for (var i = 1; i < 18; i++) {
+	if (event['Pulje' + i] == null) {
+	    return false;
+	}
+    }
+
+    return true;
+}
+
+function nearlyTheWholeFestival(event) {
+    for (var i = 1; i < 18; i++) {
+	if (i == 3 || i == 9 || i == 15) {
+	    continue;
+	} else if (event['Pulje' + i] == null) {
+	    return false;
+	}
+    }
+
+    return true;
+}
+
+function getPuljerFor(id, index) {
+    var event = programList.get('id', id)[0].values();
+    if (theWholeFestival(event)) {
+	return 'Hele tiden';
+    } else if (nearlyTheWholeFestival(event)) {
+	return 'Nesten hele tiden';
+    } else if (event['cancelled'] == 'J') {
+	return 'Avlyst';
+    }
+
+    var puljer = "";
+    for (var i = 0; i < 18; i++) {
+	if (notNull(event['Pulje' + i])) {
+	    puljer += 'Pulje ' + i + ' (' + data["puljer"][i] + ')<br />';
+	}
+    }
+
+    return puljer;
+}
+
+
 function notNull(value) {
     return value != null;
 }
@@ -297,7 +340,7 @@ var options = {
     item: '<li class="pulje">\
 <span class="label label-info pull-right">\
   <span class="id hidden"></span>\
-<span class="start_pulje"></span>\
+  <span class="span_puljer"></span>\
 </span>\
 <strong class="navn"></strong>\
 <br />\
@@ -311,12 +354,14 @@ var options = {
 <br />\
 <button class="button-xsmall pure-button-primary pure-button toggleDescription">Mer info</button>\
 <div class="slideDescription">\
-<strong>Maks deltagere:</strong> <span class="deltagere"></span>\
-<br />\
-<strong>Vinnertype:</strong> <span class="vinner"></span>\
-<br />\
-<strong>Beskrivelse:</strong>\
-<div class="beskrivelse"></div>\
+  <strong>Maks deltagere:</strong> <span class="deltagere"></span>\
+  <br />\
+  <strong>Vinnertype:</strong> <span class="vinner"></span>\
+  <br />\
+  <strong>Beskrivelse:</strong>\
+  <div class="beskrivelse"></div>\
+  <strong>Puljer:</strong>\
+  <div class="div_puljer"></div>\
 </div>\
 </li>'
 };
@@ -386,9 +431,10 @@ $(document).ready(function(e) {
 	}
     });
 
-    // Insert start and stop time
+    // Insert puljer
     $('.id').each(function( index ) {
-	$(this).nextAll(".start_pulje").text("Pulje " + getStartPuljeFor($(this).text(), index));
+	$(this).nextAll(".span_puljer").html(getPuljerFor($(this).text(), index));
+	$(this).siblings("slideDescription").find(".div_puljer").text('hello')
     });
 
     // Info about filters
