@@ -3,6 +3,67 @@ CURRENT_DAY = null;
 CURRENT_TYPE = null;
 // Globals end
 
+RULES_INFO = {
+    "Ny turnering": {
+	"html": "<img src=\"http://www.spillfestival.no/images/new.gif\" alt=\"Ny turnering\">",
+	"text": "Ny turneringen som ikke kom med i brosjyren"
+    },
+    "Ingen regelkunnskaper kreves": {
+	"html": "<img src=\"http://www.spillfestival.no/images/happy.gif\" alt=\"Ingen regelkunnskaper kreves\">",
+	"text": "Ingen regelkunnskaper kreves"
+    },
+    "Regelkunnskaper anbefales": {
+	"html": "<img src=\"http://www.spillfestival.no/images/worried.gif\" alt=\"Regelkunnskaper anbefales\">",
+	"text": "Regelkunnskaper anbefales"
+    },
+    "Regelkunnskaper nødvendig": {
+	"html": "<img src=\"http://www.spillfestival.no/images/mad.gif\" alt=\"Regelkunnskaper nødvendig\">",
+	"text": "Regelkunnskaper nødvendig"
+    },
+    "Påmelding kreves": {
+	"html": "<img src=\"http://www.spillfestival.no/images/envelope.gif\" alt=\"Påmelding kreves\">",
+	"text": "Forhåndspåmelding kreves for å delta."
+    },
+    "Regelinnføring vil bli gitt": {
+	"html": "<img src=\"http://www.spillfestival.no/images/nice.gif\" alt=\"Regelinnføring vil bli gitt\">",
+	"text": "Regelinnføring vil bli gitt før start spesielt med tanke på nye spillere"
+    },
+    "Ta med egne spill": {
+	"html": "<img src=\"http://www.spillfestival.no/images/hand.gif\" alt=\"Ta med egne spill\">",
+	"text": "Ta med egne spill. Spillerene må selv skaffe til veie spillkort, miniatyrer for å delta"
+    },
+    "Lagturnering": {
+	"html": "<img src=\"http://www.spillfestival.no/images/lag.gif\" alt=\"Lagturnering\">",
+	"text": "Lagturnering hvor to eller flere spillere deltar på lag sammen mot andre"
+    },
+    "Modul innlevert": {
+	"html": "<img src=\"http://www.spillfestival.no/images/modulok.gif\" alt=\"Modul innlevert\">",
+	"text": "Angir at rollespillmodulen (eventyret) for turneringen er innlevert"
+    }
+}
+
+function generateRulesImages(id, index) {
+    var event = programList.get('id', id)[0].values();
+    var html = '<br />';
+    if (event['tamed'] == 'J') {
+	html += RULES_INFO['Ta med egne spill']['html'] + ' ';
+    }
+    if (event['lag'] == 'J') {
+	html += RULES_INFO['Lagturnering']['html'] + ' ';
+    }
+    if (event['modul'] == 'J') {
+	html += RULES_INFO['Modul innlevert']['html'] + ' ';
+    }
+    if (event['pamelding'] == 'J') {
+	html += RULES_INFO['Påmelding kreves']['html'] + ' ';
+    }
+    if (event['innforing'] == 'J') {
+	html += RULES_INFO['Regelinnføring vil bli gitt']['html'] + ' ';
+    }
+    html += RULES_INFO[event['regler']]['html'];
+    return html;
+}
+
 function sortByName(a, b, options) {
     return programList.utils.naturalSort(a.navn, b.navn, options);
 }
@@ -359,8 +420,7 @@ var options = {
 </span>\
 <strong class="navn"></strong>\
 <br />\
-<strong>Regler:</strong> <span class="regler"></span>\
-<!--img src="http://www.spillfestival.no/images/happy.gif" alt="Ingen regelkunnskaper kreves"-->\
+<strong>Regler:</strong> <span id="span_rules" class="regler"></span>\
 <br />\
 <strong>Type:</strong> <span class="type"></span>\
 <br />\
@@ -450,6 +510,7 @@ $(document).ready(function(e) {
     $('.id').each(function( index ) {
 	$(this).nextAll(".span_puljer").html(getPuljerFor($(this).text(), index));
 	$(this).parent().parent().find(".div_puljer").html(getUmodifisertPuljerFor($(this).text(), index));
+	$(this).parent().parent().find("#span_rules").after(generateRulesImages($(this).text(), index));
     });
 
     // Info about filters
