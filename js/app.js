@@ -60,6 +60,21 @@ function getPuljerFor(id, index) {
     return puljer;
 }
 
+function getUmodifisertPuljerFor(id, index) {
+    var event = programList.get('id', id)[0].values();
+    if (event['cancelled'] == 'J') {
+	return 'Avlyst';
+    }
+
+    var puljer = "";
+    for (var i = 0; i < 18; i++) {
+	if (notNull(event['Pulje' + i])) {
+	    puljer += 'Pulje ' + i + ' (' + data["puljer"][i] + ')<br />';
+	}
+    }
+
+    return puljer;
+}
 
 function notNull(value) {
     return value != null;
@@ -434,7 +449,7 @@ $(document).ready(function(e) {
     // Insert puljer
     $('.id').each(function( index ) {
 	$(this).nextAll(".span_puljer").html(getPuljerFor($(this).text(), index));
-	$(this).siblings("slideDescription").find(".div_puljer").text('hello')
+	$(this).parent().parent().find(".div_puljer").html(getUmodifisertPuljerFor($(this).text(), index));
     });
 
     // Info about filters
