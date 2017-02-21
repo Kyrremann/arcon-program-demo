@@ -5,39 +5,39 @@ CURRENT_TYPE = null;
 
 RULES_INFO = {
     "Ny turnering": {
-	"html": "<img src=\"http://www.spillfestival.no/images/new.gif\" alt=\"Ny turnering\">",
+	"html": "<img src=\"images/new.gif\" alt=\"Ny turnering\">",
 	"text": "Ny turneringen som ikke kom med i brosjyren"
     },
     "Ingen regelkunnskaper kreves": {
-	"html": "<img src=\"http://www.spillfestival.no/images/happy.gif\" alt=\"Ingen regelkunnskaper kreves\">",
+	"html": "<img src=\"images/happy.gif\" alt=\"Ingen regelkunnskaper kreves\">",
 	"text": "Ingen regelkunnskaper kreves"
     },
     "Regelkunnskaper anbefales": {
-	"html": "<img src=\"http://www.spillfestival.no/images/worried.gif\" alt=\"Regelkunnskaper anbefales\">",
+	"html": "<img src=\"images/worried.gif\" alt=\"Regelkunnskaper anbefales\">",
 	"text": "Regelkunnskaper anbefales"
     },
     "Regelkunnskaper nødvendig": {
-	"html": "<img src=\"http://www.spillfestival.no/images/mad.gif\" alt=\"Regelkunnskaper nødvendig\">",
+	"html": "<img src=\"images/mad.gif\" alt=\"Regelkunnskaper nødvendig\">",
 	"text": "Regelkunnskaper nødvendig"
     },
     "Påmelding kreves": {
-	"html": "<img src=\"http://www.spillfestival.no/images/envelope.gif\" alt=\"Påmelding kreves\">",
+	"html": "<img src=\"images/envelope.gif\" alt=\"Påmelding kreves\">",
 	"text": "Forhåndspåmelding kreves for å delta."
     },
     "Regelinnføring vil bli gitt": {
-	"html": "<img src=\"http://www.spillfestival.no/images/nice.gif\" alt=\"Regelinnføring vil bli gitt\">",
+	"html": "<img src=\"images/nice.gif\" alt=\"Regelinnføring vil bli gitt\">",
 	"text": "Regelinnføring vil bli gitt før start spesielt med tanke på nye spillere"
     },
     "Ta med egne spill": {
-	"html": "<img src=\"http://www.spillfestival.no/images/hand.gif\" alt=\"Ta med egne spill\">",
+	"html": "<img src=\"images/hand.gif\" alt=\"Ta med egne spill\">",
 	"text": "Ta med egne spill. Spillerene må selv skaffe til veie spillkort, miniatyrer for å delta"
     },
     "Lagturnering": {
-	"html": "<img src=\"http://www.spillfestival.no/images/lag.gif\" alt=\"Lagturnering\">",
+	"html": "<img src=\"images/lag.gif\" alt=\"Lagturnering\">",
 	"text": "Lagturnering hvor to eller flere spillere deltar på lag sammen mot andre"
     },
     "Modul innlevert": {
-	"html": "<img src=\"http://www.spillfestival.no/images/modulok.gif\" alt=\"Modul innlevert\">",
+	"html": "<img src=\"images/modulok.gif\" alt=\"Modul innlevert\">",
 	"text": "Angir at rollespillmodulen (eventyret) for turneringen er innlevert"
     }
 }
