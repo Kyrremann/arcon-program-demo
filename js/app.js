@@ -42,6 +42,10 @@ RULES_INFO = {
     }
 }
 
+function getData(type) {
+    return data[type];
+}
+
 function generateRulesImages(id, index) {
     var event = programList.get('id', id)[0].values();
     var html = '<br />';
@@ -72,7 +76,7 @@ function getStartPuljeFor(id, index) {
     var event = programList.get('id', id)[0].values();
     for (var i = 0; i < 18; i++) {
 	if (notNull(event['Pulje' + i])) {
-	    return i + ' (' + data["puljer"][i] + ')';
+	    return i + ' (' + getData("puljer")[i] + ')';
 	}
     }
 
@@ -114,7 +118,7 @@ function getPuljerFor(id, index) {
     var puljer = "";
     for (var i = 0; i < 18; i++) {
 	if (notNull(event['Pulje' + i])) {
-	    puljer += 'Pulje ' + i + ' (' + data["puljer"][i] + ')<br />';
+	    puljer += 'Pulje ' + i + ' (' + getData("puljer")[i] + ')<br />';
 	}
     }
 
@@ -130,7 +134,7 @@ function getUmodifisertPuljerFor(id, index) {
     var puljer = "";
     for (var i = 0; i < 18; i++) {
 	if (notNull(event['Pulje' + i])) {
-	    puljer += 'Pulje ' + i + ' (' + data["puljer"][i] + ')<br />';
+	    puljer += 'Pulje ' + i + ' (' + getData("puljer")[i] + ')<br />';
 	}
     }
 
@@ -441,7 +445,7 @@ var options = {
 </li>'
 };
 
-var programList = new List('program', options, data["Turneringer"]);
+var programList = new List('program', options, getData("Turneringer"));
 programList.sort('navn', { order: "asc" });
 
 $(document).ready(function(e) {
