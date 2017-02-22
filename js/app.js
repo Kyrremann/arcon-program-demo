@@ -1,7 +1,20 @@
 // Globals
-CURRENT_DAY = null;
-CURRENT_TYPE = null;
+var CURRENT_DAY = null;
+var CURRENT_TYPE = null;
+var programList = null;
+var puljetider = null;
+var program = null;
 // Globals end
+
+$.getJSON('http://www.spillfestival.no/api/v1/puljetider', function( data ) {
+    puljetider = data['Puljetider'];
+});
+
+$.getJSON('http://www.spillfestival.no/api/v1/program', function( data ) {
+    program = data['Turneringer'];
+    programList = new List('program', options, program);
+    programList.sort('navn', { order: "asc" });
+});
 
 RULES_INFO = {
     "Ny turnering": {
@@ -43,7 +56,11 @@ RULES_INFO = {
 }
 
 function getData(type) {
-    return data[type];
+    if (type == 'puljer') {
+	return puljetider;
+    } else if (type == 'Turneringer') {
+	return program;
+    }
 }
 
 function generateRulesImages(id, index) {
@@ -444,9 +461,6 @@ var options = {
 </div>\
 </li>'
 };
-
-var programList = new List('program', options, getData("Turneringer"));
-programList.sort('navn', { order: "asc" });
 
 $(document).ready(function(e) {
     $('.filter-clear').on('click', function() {
