@@ -4,6 +4,7 @@ var CURRENT_TYPE = null;
 var programList = null;
 var puljetider = null;
 var program = null;
+var programList = null;
 // Globals end
 
 $.getJSON('http://www.spillfestival.no/api/v1/puljetider', function( data ) {
