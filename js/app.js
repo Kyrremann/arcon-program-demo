@@ -6,16 +6,31 @@ var puljetider = null;
 var program = null;
 var programList = null;
 var API_URL = 'https://www.spillfestival.no/api/v1'
+var HAVE_PULJETIDER = false;
+var HAVE_PROGRAM = false;
 // Globals end
 
 $.getJSON(API_URL + '/puljetider', function( data ) {
-    puljetider = data['Puljetider'];
+    var tider = data['Puljetider'][0];
+    puljetider = new Array(tider.length);
+    var index = 0;
+    for (var key in tider) {
+	puljetider[index++] = tider[key];
+    }
+    HAVE_PULJETIDER = true;
+    if (HAVE_PROGRAM && HAVE_PULJETIDER) {
+	populateSite();
+    }
 });
 
 $.getJSON(API_URL + '/program', function( data ) {
     program = data['Turneringer'];
     programList = new List('program', options, program);
     programList.sort('navn', { order: "asc" });
+    HAVE_PROGRAM = true;
+    if (HAVE_PROGRAM && HAVE_PULJETIDER) {
+	populateSite();
+    }
 });
 
 RULES_INFO = {
@@ -464,7 +479,7 @@ var options = {
 </li>'
 };
 
-$(document).ready(function(e) {
+function populateSite() {
     $('.filter-clear').on('click', function() {
 	CURRENT_DAY = null;
 	CURRENT_TYPE = null;
@@ -536,4 +551,10 @@ $(document).ready(function(e) {
     // Info about filters
     updateFilterText();
     updateFilterSize();
+}
+
+$(document).ready(function(e) {
+    if (HAVE_PROGRAM && HAVE_PULJETIDER) {
+	populateSite();
+    }
 });
