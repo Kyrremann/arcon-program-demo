@@ -5,13 +5,14 @@ var programList = null;
 var puljetider = null;
 var program = null;
 var programList = null;
+var API_URL = 'https://www.spillfestival.no/api/v1'
 // Globals end
 
-$.getJSON('http://www.spillfestival.no/api/v1/puljetider', function( data ) {
+$.getJSON(API_URL + '/puljetider', function( data ) {
     puljetider = data['Puljetider'];
 });
 
-$.getJSON('http://www.spillfestival.no/api/v1/program', function( data ) {
+$.getJSON(API_URL + '/program', function( data ) {
     program = data['Turneringer'];
     programList = new List('program', options, program);
     programList.sort('navn', { order: "asc" });
