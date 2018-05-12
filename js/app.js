@@ -6,6 +6,7 @@ var puljetider = null;
 var program = null;
 var programList = null;
 var API_URL = 'https://www.spillfestival.no/api/v1'
+// var API_URL = 'http://localhost:8080'; // Uncomment when testing with Docker
 var HAVE_PULJETIDER = false;
 var HAVE_PROGRAM = false;
 // Globals end
