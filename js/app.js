@@ -13,10 +13,12 @@ var HAVE_PROGRAM = false;
 
 $.getJSON(API_URL + '/puljetider', function( data ) {
     var tider = data['Puljetider'][0];
-    puljetider = new Array(tider.length);
-    var index = 0;
+    puljetider = new Array(18);
+    var index = 1;
     for (var key in tider) {
-	puljetider[index++] = tider[key];
+	if (key.startsWith("Pulje")) {
+	    puljetider[index++] = tider[key];
+	}
     }
     HAVE_PULJETIDER = true;
     if (HAVE_PROGRAM && HAVE_PULJETIDER) {
@@ -109,7 +111,7 @@ function sortByName(a, b, options) {
 
 function getStartPuljeFor(id, index) {
     var event = programList.get('id', id)[0].values();
-    for (var i = 0; i < 18; i++) {
+    for (var i = 1; i < 18; i++) {
 	if (notNull(event['Pulje' + i])) {
 	    return i + ' (' + getData("puljer")[i] + ')';
 	}
@@ -151,7 +153,7 @@ function getPuljerFor(id, index) {
     }
 
     var puljer = "";
-    for (var i = 0; i < 18; i++) {
+    for (var i = 1; i < 18; i++) {
 	if (notNull(event['Pulje' + i])) {
 	    puljer += 'Pulje ' + i + ' (' + getData("puljer")[i] + ')<br />';
 	}
@@ -167,7 +169,7 @@ function getUmodifisertPuljerFor(id, index) {
     }
 
     var puljer = "";
-    for (var i = 0; i < 18; i++) {
+    for (var i = 1; i < 18; i++) {
 	if (notNull(event['Pulje' + i])) {
 	    puljer += 'Pulje ' + i + ' (' + getData("puljer")[i] + ')<br />';
 	}
@@ -181,8 +183,7 @@ function notNull(value) {
 }
 
 function isFriday(values) {
-    return (notNull(values['Pulje0']) ||
-	    notNull(values['Pulje1']) ||
+    return (notNull(values['Pulje1']) ||
 	    notNull(values['Pulje2']) ||
 	    notNull(values['Pulje3']));
 }
