@@ -1,7 +1,40 @@
 // Globals
-CURRENT_DAY = null;
-CURRENT_TYPE = null;
+var CURRENT_DAY = null;
+var CURRENT_TYPE = null;
+var programList = null;
+var puljetider = null;
+var program = null;
+var programList = null;
+var API_URL = 'https://www.spillfestival.no/api/v1'
+// var API_URL = 'http://localhost:8080'; // Uncomment when testing with Docker
+var HAVE_PULJETIDER = false;
+var HAVE_PROGRAM = false;
 // Globals end
+
+$.getJSON(API_URL + '/puljetider', function( data ) {
+    var tider = data['Puljetider'][0];
+    puljetider = new Array(18);
+    var index = 1;
+    for (var key in tider) {
+	if (key.startsWith("Pulje")) {
+	    puljetider[index++] = tider[key];
+	}
+    }
+    HAVE_PULJETIDER = true;
+    if (HAVE_PROGRAM && HAVE_PULJETIDER) {
+	populateSite();
+    }
+});
+
+$.getJSON(API_URL + '/program', function( data ) {
+    program = data['Turneringer'];
+    programList = new List('program', options, program);
+    programList.sort('navn', { order: "asc" });
+    HAVE_PROGRAM = true;
+    if (HAVE_PROGRAM && HAVE_PULJETIDER) {
+	populateSite();
+    }
+});
 
 RULES_INFO = {
     "Ny turnering": {
@@ -43,7 +76,11 @@ RULES_INFO = {
 }
 
 function getData(type) {
-    return data[type];
+    if (type == 'puljer') {
+	return puljetider;
+    } else if (type == 'Turneringer') {
+	return program;
+    }
 }
 
 function generateRulesImages(id, index) {
@@ -74,7 +111,7 @@ function sortByName(a, b, options) {
 
 function getStartPuljeFor(id, index) {
     var event = programList.get('id', id)[0].values();
-    for (var i = 0; i < 18; i++) {
+    for (var i = 1; i < 18; i++) {
 	if (notNull(event['Pulje' + i])) {
 	    return i + ' (' + getData("puljer")[i] + ')';
 	}
@@ -116,7 +153,7 @@ function getPuljerFor(id, index) {
     }
 
     var puljer = "";
-    for (var i = 0; i < 18; i++) {
+    for (var i = 1; i < 18; i++) {
 	if (notNull(event['Pulje' + i])) {
 	    puljer += 'Pulje ' + i + ' (' + getData("puljer")[i] + ')<br />';
 	}
@@ -132,7 +169,7 @@ function getUmodifisertPuljerFor(id, index) {
     }
 
     var puljer = "";
-    for (var i = 0; i < 18; i++) {
+    for (var i = 1; i < 18; i++) {
 	if (notNull(event['Pulje' + i])) {
 	    puljer += 'Pulje ' + i + ' (' + getData("puljer")[i] + ')<br />';
 	}
@@ -146,8 +183,7 @@ function notNull(value) {
 }
 
 function isFriday(values) {
-    return (notNull(values['Pulje0']) ||
-	    notNull(values['Pulje1']) ||
+    return (notNull(values['Pulje1']) ||
 	    notNull(values['Pulje2']) ||
 	    notNull(values['Pulje3']));
 }
@@ -445,10 +481,7 @@ var options = {
 </li>'
 };
 
-var programList = new List('program', options, getData("Turneringer"));
-programList.sort('navn', { order: "asc" });
-
-$(document).ready(function(e) {
+function populateSite() {
     $('.filter-clear').on('click', function() {
 	CURRENT_DAY = null;
 	CURRENT_TYPE = null;
@@ -520,4 +553,10 @@ $(document).ready(function(e) {
     // Info about filters
     updateFilterText();
     updateFilterSize();
+}
+
+$(document).ready(function(e) {
+    if (HAVE_PROGRAM && HAVE_PULJETIDER) {
+	populateSite();
+    }
 });
